@@ -41,9 +41,11 @@ document.addEventListener('DOMContentLoaded', async () => {
     const btn = document.getElementById('manualCapture');
     btn.textContent = '⏳ 刷新中...';
     btn.disabled = true;
-    chrome.storage.local.get(['totalCourses', 'totalAssignments', 'lastCapture'], (data) => {
-      document.getElementById('courseCount').textContent = data.totalCourses || 0;
-      document.getElementById('assignmentCount').textContent = data.totalAssignments || 0;
+    chrome.storage.local.get(['data_courses', 'data_assignments', 'lastCapture'], (data) => {
+      var courses = data.data_courses || [];
+      var assignments = data.data_assignments || [];
+      document.getElementById('courseCount').textContent = courses.length;
+      document.getElementById('assignmentCount').textContent = assignments.length;
       const last = data.lastCapture;
       if (last) {
         document.getElementById('lastCapture').textContent = `${last.platform} · +${last.count}条 · ${new Date(last.time).toLocaleTimeString()}`;
