@@ -15,7 +15,7 @@
   --danger: #ef4444;
   --radius: 10px;
   --radius-sm: 6px;
-  --sidebar-width: 260px;
+  --sidebar-width: 240px;
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -32,10 +32,15 @@ a { color: var(--primary); text-decoration: none; }
 a:hover { text-decoration: underline; }
 
 /* ---------- 布局 ---------- */
-.app-layout { display: flex; min-height: 100vh; }
+.app-layout {
+  display: flex;
+  min-height: 100vh;
+  width: 100%;
+}
 
 .sidebar {
-  width: var(--sidebar-width);
+  width: 240px;
+  min-width: 240px;
   background: var(--surface);
   border-right: 1px solid var(--border);
   display: flex;
@@ -48,9 +53,10 @@ a:hover { text-decoration: underline; }
 
 .main-content {
   flex: 1;
-  margin-left: var(--sidebar-width);
-  padding: 32px;
-  max-width: 1100px;
+  margin-left: 240px;
+  padding: 40px 48px;
+  width: calc(100% - 240px);
+  min-height: 100vh;
 }
 
 /* ---------- 侧边栏 ---------- */
@@ -482,9 +488,15 @@ a:hover { text-decoration: underline; }
 .chip:hover { border-color: var(--primary); color: var(--primary); }
 
 /* 响应式 */
+@media (max-width: 1024px) {
+  .main-content { padding: 32px 24px; }
+}
+
 @media (max-width: 768px) {
-  .sidebar { width: 100%; position: relative; height: auto; }
-  .main-content { margin-left: 0; padding: 16px; }
-  .stats-bar { grid-template-columns: 1fr; }
-  .quick-actions { grid-template-columns: 1fr; }
+  .app-layout { flex-direction: column; }
+  .sidebar { width: 100%; min-width: 100%; position: relative; height: auto; }
+  .main-content { margin-left: 0; width: 100%; padding: 20px 16px; }
+  .stats-bar { grid-template-columns: repeat(3, 1fr); }
+  .form-grid { grid-template-columns: 1fr; }
+  .course-grid { grid-template-columns: 1fr; }
 }
