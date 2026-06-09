@@ -1,0 +1,12 @@
+{
+  "name": "学伴 StudyBuddy",
+  "short_name": "学伴",
+  "description": "大学生的 AI 全能管家 — 自动收集学习数据，AI 个性化辅导",
+  "start_url": "/",
+  "display": "standalone",
+  "theme_color": "#0f172a",
+  "background_color": "#0f172a",
+  "orientation": "any",
+  "icons": [],
+  "categories": ["education", "productivity"]
+}

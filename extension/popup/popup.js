@@ -31,7 +31,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   // 打开 PWA 控制台
   document.getElementById('openApp').addEventListener('click', (e) => {
     e.preventDefault();
-    chrome.tabs.create({ url: 'http://localhost:3000' });
+    chrome.tabs.create({ url: chrome.runtime.getURL('app/index.html') });
   });
 
   // 手动刷新

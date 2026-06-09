@@ -20,7 +20,7 @@ const MIME = {
 function serveStatic(req, res) {
   let url = req.url.split('?')[0];
   if (url === '/') url = '/index.html';
-  if (!url.startsWith('/api/')) url = '/app' + url;
+  if (!url.startsWith('/api/')) url = '/extension/app' + url;
   let filePath = path.normalize(url).replace(/^(\.\.[\/\\])+/, '');
   const fullPath = path.join(__dirname, filePath);
   const ext = path.extname(fullPath);
