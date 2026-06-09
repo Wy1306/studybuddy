@@ -3,17 +3,23 @@
   "name": "学伴 StudyBuddy",
   "version": "0.1.0",
   "description": "你的大学 AI 伴侣 — 自动收集学习平台数据，AI 个性化辅导",
-  "icons": {
-    "16": "icons/icon16.png",
-    "48": "icons/icon48.png",
-    "128": "icons/icon128.png"
-  },
   "permissions": ["storage"],
   "host_permissions": [
     "*://*.chaoxing.com/*",
     "*://*.zhihuishu.com/*",
     "*://*.xuexi.cn/*",
     "*://*.xuexiqiangguo.com/*"
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["platforms/*.js"],
+      "matches": [
+        "*://*.chaoxing.com/*",
+        "*://*.zhihuishu.com/*",
+        "*://*.xuexi.cn/*",
+        "*://*.xuexiqiangguo.com/*"
+      ]
+    }
   ],
   "background": {
     "service_worker": "background.js"
