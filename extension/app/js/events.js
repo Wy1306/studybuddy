@@ -1,3 +1,9 @@
+// 全局事件委托 — CSP 安全版
+function showStatus(msg, type) {
+  var s = document.getElementById('apiKeyStatus');
+  if (s) { s.textContent = msg; s.className = 'api-key-status ' + (type || 'idle'); }
+}
+
 // 全局事件委托 — CSP 安全版，替代 onclick 属性
 
 document.addEventListener('click', function (e) {
@@ -25,20 +31,15 @@ document.addEventListener('click', function (e) {
 
   if (saveBtn) {
     saveBtn.addEventListener('click', function () {
-      var raw = keyInput.value;
-      var key = raw.replace(/[^a-zA-Z0-9\-_]/g, ''); // 只保留有效字符
-      console.log('Key saved, length:', key.length, 'prefix:', key.slice(0, 5));
-      try {
-        if (!key || key.length < 20) throw new Error('Key 太短，请检查');
-        if (key.slice(0, 3) !== 'sk-') throw new Error('Key 应以 sk- 开头，当前: ' + key.slice(0, 5));
-        AI.setApiKey(key);
-        keyInput.value = '';
-        var s = document.getElementById('apiKeyStatus');
-        if (s) { s.textContent = '已保存'; s.className = 'api-key-status ok'; }
-      } catch (e) {
-        var s = document.getElementById('apiKeyStatus');
-        if (s) { s.textContent = e.message; s.className = 'api-key-status error'; }
-      }
+      var key = keyInput.value.trim();
+      // 去除可能粘贴进来的不可见字符
+      key = key.replace(/[^\x20-\x7E]/g, '');
+      if (!key) { showStatus('请输入 Key', 'error'); return; }
+      if (key.length < 30) { showStatus('Key 太短，请检查是否完整', 'error'); return; }
+      if (key.indexOf('sk-') !== 0) { showStatus('应以 sk- 开头，当前前3位: ' + key.slice(0,3), 'error'); return; }
+      AI.setApiKey(key);
+      keyInput.value = '';
+      showStatus('已保存', 'ok');
     });
   }
 
