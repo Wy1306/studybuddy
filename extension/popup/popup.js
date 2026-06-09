@@ -41,19 +41,21 @@ document.addEventListener('DOMContentLoaded', async () => {
     chrome.tabs.create({ url: 'http://localhost:3000' });
   });
 
-  // 手动抓取
+  // 手动刷新统计数据
   document.getElementById('manualCapture').addEventListener('click', async () => {
     const btn = document.getElementById('manualCapture');
-    btn.textContent = '⏳ 正在抓取...';
+    btn.textContent = '⏳ 读取中...';
     btn.disabled = true;
     try {
-      await chrome.tabs.sendMessage(tab.id, { type: 'MANUAL_CAPTURE' });
-      btn.textContent = '✅ 抓取完成';
-      setTimeout(() => { btn.textContent = '🔄 手动抓取当前页面'; btn.disabled = false; }, 2000);
+      // 直接读 IndexedDB 中的最新数据
+      const count = await getDBStats();
+      document.getElementById('courseCount').textContent = count.courses || 0;
+      document.getElementById('assignmentCount').textContent = count.assignments || 0;
+      btn.textContent = '✅ 已刷新';
     } catch (_) {
-      btn.textContent = '⚠️ 请在当前页面刷新后重试';
-      setTimeout(() => { btn.textContent = '🔄 手动抓取当前页面'; btn.disabled = false; }, 2000);
+      btn.textContent = '⚠️ 暂无数据';
     }
+    setTimeout(() => { btn.textContent = '🔄 刷新统计'; btn.disabled = false; }, 2000);
   });
 });
 
