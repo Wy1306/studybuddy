@@ -10,39 +10,26 @@
     "*://*.xuexi.cn/*",
     "*://*.xuexiqiangguo.com/*"
   ],
-  "web_accessible_resources": [
-    {
-      "resources": ["platforms/*.js"],
-      "matches": [
-        "*://*.chaoxing.com/*",
-        "*://*.zhihuishu.com/*",
-        "*://*.xuexi.cn/*",
-        "*://*.xuexiqiangguo.com/*"
-      ]
-    }
-  ],
   "background": {
     "service_worker": "background.js"
   },
-  "content_scripts": [
-    {
-      "matches": [
-        "*://*.chaoxing.com/*",
-        "*://*.zhihuishu.com/*",
-        "*://*.xuexi.cn/*",
-        "*://*.xuexiqiangguo.com/*"
-      ],
-      "js": [
-        "platforms/registry.js",
-        "platforms/chaoxing.js",
-        "platforms/zhidao.js",
-        "platforms/xuexiqiangguo.js",
-        "platforms/generic.js",
-        "content-script.js"
-      ],
-      "run_at": "document_idle"
-    }
-  ],
+  "content_scripts": [{
+    "matches": [
+      "*://*.chaoxing.com/*",
+      "*://*.zhihuishu.com/*",
+      "*://*.xuexi.cn/*",
+      "*://*.xuexiqiangguo.com/*"
+    ],
+    "js": [
+      "platforms/registry.js",
+      "platforms/chaoxing.js",
+      "platforms/zhidao.js",
+      "platforms/xuexiqiangguo.js",
+      "platforms/generic.js",
+      "content-script.js"
+    ],
+    "run_at": "document_idle"
+  }],
   "action": {
     "default_popup": "popup/popup.html",
     "default_title": "学伴 - 查看抓取状态"
