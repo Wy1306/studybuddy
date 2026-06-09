@@ -65,7 +65,8 @@
     chrome.runtime.sendMessage({
       type: 'DATA_CAPTURED',
       platform: platform.name,
-      count: totalItems
+      courseCount: (data.courses || []).length,
+      assignmentCount: (data.assignments || []).length
     });
     console.log(`[StudyBuddy] 数据已写入: ${(data.courses || []).length}门课程, ${(data.assignments || []).length}份作业`);
   } catch (e) {
