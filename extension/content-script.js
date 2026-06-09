@@ -3,9 +3,12 @@
 
 (async function () {
   const platform = detectPlatform();
-  if (!platform) return;
+  if (!platform) {
+    console.log('[StudyBuddy] 当前页面非学习平台: ' + window.location.hostname);
+    return;
+  }
 
-  console.log(`[StudyBuddy] 检测到平台: ${platform.name}`);
+  console.log('[StudyBuddy] 检测到平台: ' + platform.name + ' | URL: ' + window.location.href);
   await sleep(1500); // 等待页面完全渲染
 
   let data = {
