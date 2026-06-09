@@ -11,9 +11,9 @@ const Errors = {
       <div class="card">
         <h3>📥 选择错题来源</h3>
         <div class="errors-source-tabs">
-          <button class="source-tab active" onclick="Errors.switchSource('assignment')">从作业错题</button>
-          <button class="source-tab" onclick="Errors.switchSource('manual')">手动输入</button>
-          <button class="source-tab" onclick="Errors.switchSource('practice')">练习记录</button>
+          <button class="source-tab active" data-click="Errors.switchSource('assignment')">从作业错题</button>
+          <button class="source-tab" data-click="Errors.switchSource('manual')">手动输入</button>
+          <button class="source-tab" data-click="Errors.switchSource('practice')">练习记录</button>
         </div>
 
         <div id="errorsSourceAssignment" class="errors-source-panel">
@@ -42,7 +42,7 @@ const Errors = {
               <option value="other">其他</option>
             </select>
           </div>
-          <button class="btn-primary" onclick="Errors.diagnoseManual()">🔍 诊断错因</button>
+          <button class="btn-primary" data-click="Errors.diagnoseManual()">🔍 诊断错因</button>
         </div>
 
         <div id="errorsSourcePractice" class="errors-source-panel" style="display:none">
@@ -73,7 +73,7 @@ const Errors = {
         return;
       }
       container.innerHTML = withErrors.map(a => `
-        <div class="error-assignment-card" onclick="Errors.diagnoseAssignment('${a.id}')">
+        <div class="error-assignment-card" data-click="Errors.diagnoseAssignment('${a.id}')">
           <div class="ea-title">${escapeHtml(a.title || '未命名作业')}</div>
           <div class="ea-meta">得分: ${a.score || '-'} · ${escapeHtml(a.feedback || '')}</div>
           <span class="ea-action">诊断 →</span>

@@ -35,7 +35,7 @@ const Career = {
           <label>其他信息（竞赛/证书/实习等）</label>
           <textarea id="careerExtra" class="input-textarea" rows="3" placeholder="智能汽车竞赛 / ROS2学习 / 有GitHub项目 / ..."></textarea>
         </div>
-        <button class="btn-primary" onclick="Career.analyze()">📊 AI 分析就业前景</button>
+        <button class="btn-primary" data-click="Career.analyze()">📊 AI 分析就业前景</button>
       </div>
 
       <div class="result-box" id="careerResult"></div>

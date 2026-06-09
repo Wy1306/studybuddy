@@ -41,7 +41,7 @@ const Interview = {
             </select>
           </div>
         </div>
-        <button class="btn-primary" onclick="Interview.start()" id="interviewStartBtn">▶ 开始面试</button>
+        <button class="btn-primary" data-click="Interview.start()" id="interviewStartBtn">▶ 开始面试</button>
       </div>
 
       <div id="interviewSession" style="display:none">
@@ -54,9 +54,9 @@ const Interview = {
           <h3>✏️ 你的回答</h3>
           <textarea id="interviewAnswer" class="input-textarea" rows="6" placeholder="在这里输入你的回答..."></textarea>
           <div class="interview-actions">
-            <button class="btn-primary" onclick="Interview.submit()">📤 提交回答</button>
-            <button class="btn-small btn-ghost" onclick="Interview.skip()">跳过此题</button>
-            <button class="btn-small btn-ghost" onclick="Interview.end()">结束面试</button>
+            <button class="btn-primary" data-click="Interview.submit()">📤 提交回答</button>
+            <button class="btn-small btn-ghost" data-click="Interview.skip()">跳过此题</button>
+            <button class="btn-small btn-ghost" data-click="Interview.end()">结束面试</button>
           </div>
         </div>
 

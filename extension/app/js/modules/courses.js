@@ -71,7 +71,7 @@ const Courses = {
                       <div class="text-dim">📄 ${(c.materials || []).length} 个课件</div>
                     </div>
                     <div class="cc-actions">
-                      <button class="btn-small" onclick="App.navigate('notes')">📝 笔记</button>
+                      <button class="btn-small" data-click="App.navigate('notes')">📝 笔记</button>
                     </div>
                   </div>
                 `).join('')}

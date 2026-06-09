@@ -28,7 +28,7 @@ const CodeCheck = {
             <option value="bugs">Bug扫描</option>
           </select>
         </div>
-        <button class="btn-primary" onclick="CodeCheck.analyze()">🔬 开始体检</button>
+        <button class="btn-primary" data-click="CodeCheck.analyze()">🔬 开始体检</button>
       </div>
 
       <div class="result-box" id="codeCheckResult"></div>

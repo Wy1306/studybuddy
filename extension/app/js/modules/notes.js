@@ -11,9 +11,9 @@ const Notes = {
       <div class="card">
         <h3>📥 内容来源</h3>
         <div class="notes-source-tabs">
-          <button class="source-tab active" onclick="Notes.switchSource('course')">从课程资料</button>
-          <button class="source-tab" onclick="Notes.switchSource('manual')">手动输入</button>
-          <button class="source-tab" onclick="Notes.switchSource('history')">历史笔记</button>
+          <button class="source-tab active" data-click="Notes.switchSource('course')">从课程资料</button>
+          <button class="source-tab" data-click="Notes.switchSource('manual')">手动输入</button>
+          <button class="source-tab" data-click="Notes.switchSource('history')">历史笔记</button>
         </div>
 
         <div id="notesSourceCourse" class="notes-source-panel">
@@ -32,7 +32,7 @@ const Notes = {
               </select>
             </label>
           </div>
-          <button class="btn-primary" onclick="Notes.generateFromManual()">✨ AI 生成笔记</button>
+          <button class="btn-primary" data-click="Notes.generateFromManual()">✨ AI 生成笔记</button>
         </div>
 
         <div id="notesSourceHistory" class="notes-source-panel" style="display:none">
@@ -72,7 +72,7 @@ const Notes = {
           <div class="material-course-meta">${escapeHtml(c.teacher || '')} · ${escapeHtml(c.platform || '')}</div>
           ${(c.materials || []).length > 0
             ? c.materials.slice(0, 5).map(m => `
-                <div class="material-item" onclick="Notes.generateFromMaterial('${c.id}', '${escapeHtml(m.title)}')">
+                <div class="material-item" data-click="Notes.generateFromMaterial('${c.id}', '${escapeHtml(m.title)}')">
                   📄 ${escapeHtml(m.title)}
                   <span class="material-action">生成笔记 →</span>
                 </div>
@@ -146,7 +146,7 @@ const Notes = {
       container.innerHTML = notes
         .sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0))
         .map(n => `
-          <div class="history-item" onclick="Notes.viewHistory('${n.id}')">
+          <div class="history-item" data-click="Notes.viewHistory('${n.id}')">
             <div class="history-title">${escapeHtml((n.rawContent || '无标题').slice(0, 80))}</div>
             <div class="history-time">${new Date(n.createdAt).toLocaleString()}</div>
           </div>

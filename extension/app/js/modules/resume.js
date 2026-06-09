@@ -28,7 +28,7 @@ const Resume = {
           <label>项目经历（可选，会从课程数据自动填充）</label>
           <textarea id="resumeProjects" class="input-textarea" rows="4" placeholder="描述你做过的项目..."></textarea>
         </div>
-        <button class="btn-primary" onclick="Resume.generate()">✨ AI 生成简历</button>
+        <button class="btn-primary" data-click="Resume.generate()">✨ AI 生成简历</button>
       </div>
 
       <div class="result-box" id="resumeResult"></div>

@@ -28,11 +28,11 @@ const Dashboard = {
         ` : this.emptyGuide()}
 
         <div class="quick-bar">
-          <button class="quick-chip" onclick="App.navigate('notes')">📝 生成笔记</button>
-          <button class="quick-chip" onclick="App.navigate('errors')">🎯 错题诊断</button>
-          <button class="quick-chip" onclick="App.navigate('resume')">📄 写简历</button>
-          <button class="quick-chip" onclick="App.navigate('interview')">🎤 模拟面试</button>
-          <button class="quick-chip" onclick="App.navigate('career')">💼 就业分析</button>
+          <button class="quick-chip" data-click="App.navigate('notes')">📝 生成笔记</button>
+          <button class="quick-chip" data-click="App.navigate('errors')">🎯 错题诊断</button>
+          <button class="quick-chip" data-click="App.navigate('resume')">📄 写简历</button>
+          <button class="quick-chip" data-click="App.navigate('interview')">🎤 模拟面试</button>
+          <button class="quick-chip" data-click="App.navigate('career')">💼 就业分析</button>
         </div>
       `;
 
@@ -47,7 +47,7 @@ const Dashboard = {
         <h3>📚 课程</h3>
         <div class="course-chips">
           ${courses.slice(0, 5).map(c => `
-            <span class="chip" onclick="App.navigate('courses')">${escapeHtml(c.courseName)}</span>
+            <span class="chip" data-click="App.navigate('courses')">${escapeHtml(c.courseName)}</span>
           `).join('')}
           ${courses.length > 5 ? `<span class="chip">+${courses.length-5}</span>` : ''}
         </div>
