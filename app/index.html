@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0f172a">
+  <meta name="description" content="学伴 StudyBuddy — 大学生的 AI 全能管家">
+  <title>学伴 StudyBuddy</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="manifest" href="manifest.json">
+</head>
+<body>
+  <div class="app-layout">
+    <!-- 侧边栏 -->
+    <aside class="sidebar">
+      <div class="sidebar-brand">
+        <span class="brand-icon">🦉</span>
+        <div>
+          <div class="brand-name">学伴</div>
+          <div class="brand-sub">StudyBuddy</div>
+        </div>
+      </div>
+
+      <nav class="sidebar-nav">
+        <a class="nav-item active" data-nav="dashboard">
+          <span class="nav-icon">📊</span> 仪表盘
+        </a>
+        <a class="nav-item" data-nav="courses">
+          <span class="nav-icon">📚</span> 课程
+        </a>
+        <a class="nav-item" data-nav="notes">
+          <span class="nav-icon">📝</span> 智能笔记
+        </a>
+        <a class="nav-item" data-nav="errors">
+          <span class="nav-icon">🎯</span> 错题诊断
+        </a>
+        <a class="nav-item" data-nav="resume">
+          <span class="nav-icon">📄</span> 简历
+        </a>
+        <a class="nav-item" data-nav="interview">
+          <span class="nav-icon">🎤</span> 面试模拟
+        </a>
+        <a class="nav-item" data-nav="career">
+          <span class="nav-icon">💼</span> 就业分析
+        </a>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="api-key-mini">
+          <input type="password" id="apiKeyInput" placeholder="DeepSeek Key (sk-...)" class="input-mini">
+          <button id="btnSaveKey" class="btn-mini" title="保存 Key">💾</button>
+          <button id="btnShowKey" class="btn-mini btn-ghost" title="显示/隐藏">👁</button>
+        </div>
+        <div class="api-key-status idle" id="apiKeyStatus">未设置</div>
+        <div class="sidebar-hint">
+          数据只存本地 · Key 你自己提供<br>
+          <a href="https://platform.deepseek.com/" target="_blank">免费注册 DeepSeek →</a>
+        </div>
+      </div>
+    </aside>
+
+    <!-- 主内容区 -->
+    <main class="main-content" id="mainContent">
+      <div class="loading-spinner">加载中...</div>
+    </main>
+  </div>
+
+  <script src="js/db.js"></script>
+  <script src="js/ai.js"></script>
+  <script src="js/render.js"></script>
+  <script src="js/modules/dashboard.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

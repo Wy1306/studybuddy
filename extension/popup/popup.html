@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      width: 320px;
+      font-family: -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+      background: #0f172a;
+      color: #e2e8f0;
+      padding: 20px;
+    }
+    .header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 18px;
+    }
+    .logo { font-size: 28px; }
+    .title { font-size: 18px; font-weight: 700; }
+    .version { font-size: 11px; color: #64748b; }
+    .status-card {
+      background: #1e293b;
+      border: 1px solid #334155;
+      border-radius: 10px;
+      padding: 14px;
+      margin-bottom: 12px;
+    }
+    .status-label { font-size: 12px; color: #94a3b8; margin-bottom: 6px; }
+    .status-value { font-size: 14px; font-weight: 600; }
+    .status-value.success { color: #22c55e; }
+    .status-value.idle { color: #94a3b8; }
+    .stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+    .stat-item {
+      background: #1e293b;
+      border: 1px solid #334155;
+      border-radius: 8px;
+      padding: 12px;
+      text-align: center;
+    }
+    .stat-num { font-size: 24px; font-weight: 700; color: #3b82f6; }
+    .stat-label { font-size: 11px; color: #94a3b8; margin-top: 2px; }
+    .btn {
+      display: block;
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #3b82f6;
+      border-radius: 8px;
+      background: #1e293b;
+      color: #3b82f6;
+      font-size: 13px;
+      cursor: pointer;
+      text-align: center;
+      text-decoration: none;
+      margin-bottom: 8px;
+    }
+    .btn:hover { background: #1e3a5f; }
+    .btn.primary { background: #3b82f6; color: white; }
+    .btn.primary:hover { background: #2563eb; }
+    .footer { font-size: 11px; color: #475569; text-align: center; margin-top: 12px; }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <span class="logo">🦉</span>
+    <div>
+      <div class="title">学伴 StudyBuddy</div>
+      <div class="version">v0.1.0 · 数据采集引擎</div>
+    </div>
+  </div>
+
+  <div class="status-card">
+    <div class="status-label">当前页面</div>
+    <div class="status-value" id="currentPlatform">检测中...</div>
+  </div>
+
+  <div class="status-card">
+    <div class="status-label">最近抓取</div>
+    <div class="status-value idle" id="lastCapture">暂无数据</div>
+  </div>
+
+  <div class="stats">
+    <div class="stat-item">
+      <div class="stat-num" id="courseCount">0</div>
+      <div class="stat-label">已获取课程</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num" id="assignmentCount">0</div>
+      <div class="stat-label">已获取作业</div>
+    </div>
+  </div>
+
+  <a class="btn primary" href="#" id="openApp">打开学伴控制台</a>
+  <button class="btn" id="manualCapture">🔄 手动抓取当前页面</button>
+
+  <div class="footer">
+    数据只存在你的浏览器 · 不会上传到任何服务器
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>
