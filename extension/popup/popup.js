@@ -16,9 +16,11 @@ document.addEventListener('DOMContentLoaded', async () => {
   document.getElementById('currentPlatform').className = detected ? 'status-value success' : 'status-value idle';
 
   // 从 chrome.storage.local 读数据
-  chrome.storage.local.get(['totalCourses', 'totalAssignments', 'lastCapture'], (data) => {
-    document.getElementById('courseCount').textContent = data.totalCourses || 0;
-    document.getElementById('assignmentCount').textContent = data.totalAssignments || 0;
+  chrome.storage.local.get(['data_courses', 'data_assignments', 'lastCapture'], (data) => {
+    var courses = data.data_courses || [];
+    var assignments = data.data_assignments || [];
+    document.getElementById('courseCount').textContent = courses.length;
+    document.getElementById('assignmentCount').textContent = assignments.length;
 
     const last = data.lastCapture;
     if (last && last.time > 0) {

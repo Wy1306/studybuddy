@@ -65,8 +65,8 @@
     chrome.runtime.sendMessage({
       type: 'DATA_CAPTURED',
       platform: platform.name,
-      courseCount: (data.courses || []).length,
-      assignmentCount: (data.assignments || []).length
+      courses: (data.courses || []).map(function(c) { return { id: c.id, courseName: c.courseName, teacher: c.teacher || '', platform: c.platform || '', semester: c.semester || '', materials: c.materials || [], _capturedAt: c._capturedAt || data.timestamp }; }),
+      assignments: (data.assignments || []).map(function(a) { return { id: a.id, courseId: a.courseId || '', title: a.title, deadline: a.deadline || '', status: a.status || 'pending', score: a.score, content: a.content || '', feedback: a.feedback || '', _capturedAt: a._capturedAt || data.timestamp }; })
     });
     console.log(`[StudyBuddy] 数据已写入: ${(data.courses || []).length}门课程, ${(data.assignments || []).length}份作业`);
   } catch (e) {
