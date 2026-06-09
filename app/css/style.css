@@ -441,6 +441,46 @@ a:hover { text-decoration: underline; }
   flex-wrap: wrap;
 }
 
+/* ---------- 快捷操作栏 ---------- */
+.quick-bar {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 8px;
+}
+
+.quick-chip {
+  padding: 8px 16px;
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  background: var(--surface);
+  color: var(--text);
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.quick-chip:hover { border-color: var(--primary); background: var(--surface2); }
+
+/* ---------- 课程标签 ---------- */
+.course-chips {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.chip {
+  padding: 6px 14px;
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  background: var(--bg);
+  color: var(--text);
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.chip:hover { border-color: var(--primary); color: var(--primary); }
+
 /* 响应式 */
 @media (max-width: 768px) {
   .sidebar { width: 100%; position: relative; height: auto; }

@@ -1,5 +1,4 @@
-// 仪表盘模块 — 学习数据总览
-// 显示课程卡片、作业DDL、最近活动、快速入口
+// 仪表盘 — 简洁总览，不堆空卡片
 
 const Dashboard = {
   async render(container) {
@@ -12,131 +11,71 @@ const Dashboard = {
         DB.getAll('notes').catch(() => [])
       ]);
 
-      const pendingAssignments = (assignments || [])
-        .filter(a => a.status === 'pending')
+      const pending = (assignments || []).filter(a => a.status === 'pending')
         .sort((a, b) => (a.deadline || '').localeCompare(b.deadline || ''));
-
-      const recentNotes = (notes || [])
-        .sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0))
-        .slice(0, 5);
+      const hasData = (courses || []).length > 0 || pending.length > 0 || (notes || []).length > 0;
 
       container.innerHTML = `
-        <div class="dashboard-grid">
-          ${this.renderStats(courses, assignments, notes)}
-          ${this.renderCourses(courses)}
-          ${this.renderDDL(pendingAssignments)}
-          ${this.renderRecentNotes(recentNotes)}
-          ${this.renderQuickActions()}
+        <div class="stats-bar">
+          <div class="stat-card"><div class="stat-num">${(courses||[]).length}</div><div class="stat-label">课程</div></div>
+          <div class="stat-card"><div class="stat-num">${pending.length}</div><div class="stat-label">待交作业</div></div>
+          <div class="stat-card"><div class="stat-num">${(notes||[]).length}</div><div class="stat-label">笔记</div></div>
+        </div>
+
+        ${hasData ? `
+          ${(courses||[]).length > 0 ? this.coursesCompact(courses) : ''}
+          ${pending.length > 0 ? this.ddlCompact(pending) : ''}
+        ` : this.emptyGuide()}
+
+        <div class="quick-bar">
+          <button class="quick-chip" onclick="App.navigate('notes')">📝 生成笔记</button>
+          <button class="quick-chip" onclick="App.navigate('errors')">🎯 错题诊断</button>
+          <button class="quick-chip" onclick="App.navigate('resume')">📄 写简历</button>
+          <button class="quick-chip" onclick="App.navigate('interview')">🎤 模拟面试</button>
+          <button class="quick-chip" onclick="App.navigate('career')">💼 就业分析</button>
         </div>
       `;
+
     } catch (err) {
-      container.innerHTML = `
-        <div class="empty-state">
-          <div class="empty-icon">📚</div>
-          <h3>还没有数据</h3>
-          <p>安装学伴浏览器扩展后，打开学习通/知到等平台，数据会自动同步到这里。</p>
-          <div class="action-buttons">
-            <button class="btn-primary" onclick="App.navigate('settings')">🔧 设置指南</button>
-          </div>
-        </div>
-      `;
+      container.innerHTML = `<div class="empty-state"><p>加载失败: ${err.message}</p></div>`;
     }
   },
 
-  renderStats(courses, assignments, notes) {
-    const pending = (assignments || []).filter(a => a.status === 'pending').length;
-    return `
-      <div class="stats-bar">
-        <div class="stat-card">
-          <div class="stat-num">${(courses || []).length}</div>
-          <div class="stat-label">课程</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-num">${pending}</div>
-          <div class="stat-label">待完成作业</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-num">${(notes || []).length}</div>
-          <div class="stat-label">笔记</div>
-        </div>
-      </div>
-    `;
-  },
-
-  renderCourses(courses) {
-    if (!courses || !courses.length) return '<div class="card"><h3>📋 课程</h3><p class="text-dim">暂无课程数据</p></div>';
+  coursesCompact(courses) {
     return `
       <div class="card">
-        <h3>📋 我的课程</h3>
-        <div class="course-list">
-          ${courses.slice(0, 6).map(c => `
-            <div class="course-item" onclick="App.navigate('courses', '${c.id}')">
-              <div class="course-name">${escapeHtml(c.courseName || '未命名课程')}</div>
-              <div class="course-meta">${escapeHtml(c.teacher || '')} · ${escapeHtml(c.platform || '')}</div>
-            </div>
+        <h3>📚 课程</h3>
+        <div class="course-chips">
+          ${courses.slice(0, 5).map(c => `
+            <span class="chip" onclick="App.navigate('courses')">${escapeHtml(c.courseName)}</span>
           `).join('')}
+          ${courses.length > 5 ? `<span class="chip">+${courses.length-5}</span>` : ''}
         </div>
-        ${courses.length > 6 ? `<p class="text-dim">还有 ${courses.length - 6} 门课程...</p>` : ''}
-      </div>
-    `;
+      </div>`;
   },
 
-  renderDDL(assignments) {
+  ddlCompact(pending) {
     return `
       <div class="card">
         <h3>⏰ 即将截止</h3>
-        ${assignments.length === 0
-          ? '<p class="text-dim">暂无待完成作业 🎉</p>'
-          : `<div class="ddl-list">
-              ${assignments.slice(0, 5).map(a => `
-                <div class="ddl-item">
-                  <div class="ddl-title">${escapeHtml(a.title || '未命名作业')}</div>
-                  <div class="ddl-deadline">⏰ ${escapeHtml(a.deadline || '截止日期未设置')}</div>
-                </div>
-              `).join('')}
-            </div>`
-        }
-      </div>
-    `;
-  },
-
-  renderRecentNotes(notes) {
-    if (!notes.length) return '';
-    return `
-      <div class="card">
-        <h3>📝 最近笔记</h3>
-        <div class="note-list">
-          ${notes.map(n => `
-            <div class="note-item" onclick="App.navigate('notes', '${n.id}')">
-              <div class="note-preview">${escapeHtml((n.aiSummary || n.rawContent || '').slice(0, 100))}</div>
-              <div class="note-time">${new Date(n.createdAt).toLocaleDateString()}</div>
-            </div>
+        <div class="ddl-list">
+          ${pending.slice(0, 4).map(a => `
+            <div class="ddl-item"><span>${escapeHtml(a.title)}</span><span class="text-dim">${escapeHtml(a.deadline||'')}</span></div>
           `).join('')}
         </div>
-      </div>
-    `;
+      </div>`;
   },
 
-  renderQuickActions() {
-    const actions = [
-      { icon: '📝', label: '生成笔记', desc: '从课件一键生成', nav: 'notes' },
-      { icon: '🐛', label: '错题诊断', desc: '分析错因+同类题', nav: 'errors' },
-      { icon: '📄', label: '简历生成', desc: 'AI定制简历', nav: 'resume' },
-      { icon: '🎤', label: '面试模拟', desc: 'AI模拟面试官', nav: 'interview' }
-    ];
+  emptyGuide() {
     return `
-      <div class="card">
-        <h3>🚀 快速开始</h3>
-        <div class="quick-actions">
-          ${actions.map(a => `
-            <button class="quick-action-btn" onclick="App.navigate('${a.nav}')">
-              <span class="qa-icon">${a.icon}</span>
-              <span class="qa-label">${a.label}</span>
-              <span class="qa-desc">${a.desc}</span>
-            </button>
-          `).join('')}
-        </div>
-      </div>
-    `;
+      <div class="empty-state">
+        <div class="empty-icon">🦉</div>
+        <h3>欢迎使用学伴</h3>
+        <p>安装扩展后，打开学习通 / 知到，<br>课程和作业会自动同步到这里。</p>
+        <p class="text-dim" style="font-size:12px;margin-top:8px">
+          扩展位置：<code>C:\\Users\\44986\\Desktop\\studybuddy\\extension</code><br>
+          Chrome → chrome://extensions → 加载已解压的扩展程序
+        </p>
+      </div>`;
   }
 };
