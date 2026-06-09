@@ -72,7 +72,7 @@
 
 async function saveToDB(data) {
   return new Promise((resolve, reject) => {
-    const request = indexedDB.open('studybuddy', 1);
+    const request = indexedDB.open('studybuddy', 2);
     request.onerror = () => reject(request.error);
     request.onsuccess = () => {
       const db = request.result;

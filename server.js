@@ -18,8 +18,10 @@ const MIME = {
 };
 
 function serveStatic(req, res) {
-  let filePath = req.url === '/' ? '/app/index.html' : req.url;
-  filePath = path.normalize(filePath).replace(/^(\.\.[\/\\])+/, '');
+  let url = req.url.split('?')[0];
+  if (url === '/') url = '/index.html';
+  if (!url.startsWith('/api/')) url = '/app' + url;
+  let filePath = path.normalize(url).replace(/^(\.\.[\/\\])+/, '');
   const fullPath = path.join(__dirname, filePath);
   const ext = path.extname(fullPath);
 
