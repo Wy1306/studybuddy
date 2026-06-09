@@ -15,16 +15,22 @@ document.addEventListener('click', function (e) {
   }
 });
 
-// 侧边栏按钮
-document.addEventListener('DOMContentLoaded', function () {
+// 侧边栏按钮 — 不用 DOMContentLoaded，直接绑定
+(function initSidebar() {
   var keyInput = document.getElementById('apiKeyInput');
   var saveBtn = document.getElementById('btnSaveKey');
   var showBtn = document.getElementById('btnShowKey');
 
+  if (!keyInput) return setTimeout(initSidebar, 100); // 等 DOM 加载
+
   if (saveBtn) {
     saveBtn.addEventListener('click', function () {
+      var raw = keyInput.value;
+      var key = raw.replace(/[^a-zA-Z0-9\-_]/g, ''); // 只保留有效字符
+      console.log('Key saved, length:', key.length, 'prefix:', key.slice(0, 5));
       try {
-        var key = keyInput.value.trim();
+        if (!key || key.length < 20) throw new Error('Key 太短，请检查');
+        if (key.slice(0, 3) !== 'sk-') throw new Error('Key 应以 sk- 开头，当前: ' + key.slice(0, 5));
         AI.setApiKey(key);
         keyInput.value = '';
         var s = document.getElementById('apiKeyStatus');
@@ -46,4 +52,4 @@ document.addEventListener('DOMContentLoaded', function () {
     var s = document.getElementById('apiKeyStatus');
     if (s) { s.textContent = '已设置'; s.className = 'api-key-status idle'; }
   }
-});
+})();
